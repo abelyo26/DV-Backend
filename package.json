@@ -44,6 +44,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^8.1.0",
     "express-validator": "^7.0.1",
     "flat": "^4.1.1",
     "googleapis": "^135.1.0",

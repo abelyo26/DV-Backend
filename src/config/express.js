@@ -3,6 +3,7 @@ import compress from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import httpStatus from 'http-status';
 import morgan from 'morgan';
@@ -62,7 +63,20 @@ app.use('/files', cors(corsOptions), express.static('uploads'));
 // Secure middlewares
 app.use(helmet());
 
-app.use('/api', routes);
+// Rate limiting middleware - general API limit
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per window
+  standardHeaders: 'draft-7', // Set standard headers - X-RateLimit-Limit etc.
+  legacyHeaders: false, // Disable the X-RateLimit-* headers
+  message: {
+    message: 'Too many requests, please try again later.',
+    status: httpStatus.TOO_MANY_REQUESTS,
+  },
+});
+
+// Apply the rate limiting middleware to API routes
+app.use('/api', apiLimiter, routes);
 
 // 404 - endpoint not found
 app.use((req, res, next) => {

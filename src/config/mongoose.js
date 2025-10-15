@@ -21,8 +21,6 @@ const connectToDb = async () => {
   try {
     const connectOptions = {};
 
-    console.log('------------>', environments.mongoUrl);
-
     const db = await mongoose.connect(environments.mongoUrl, connectOptions);
 
     if (environments.nodeEnv !== 'test') {
