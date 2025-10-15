@@ -1,0 +1,67 @@
+/**
+ *
+ * Your {{ properCase modelName }} migration
+ *
+ */
+
+const {
+  modelNames: { {{ modelName }} },
+} = require('../../../utils/constants');
+const { checkDumpExists } = require('../../utils');
+const { createDump, restoreDumb } = require('../../utils/dumpDb');
+
+const name = {{ modelName }};
+const reference = '{{ reference }}';
+
+const dumpDir = './dumps';
+
+// Note: by default on file generation add the collections name to the associatedDumps array
+const associatedDumps = [];
+
+/**
+ * Migrate the database
+ * @async
+ * @param {string} db - The database name
+ * @param {object} options - The options object
+ * @param {boolean} options.force - The force flag to force run migration
+ * @returns {Promise<any>} - The function can return any type of value.
+ */
+const migrate = async (db, options) => {
+  const dumpExistsCollection = checkDumpExists({
+    directory: `${dumpDir}/${name}`,
+    reference,
+  });
+
+  if (!options.force && dumpExistsCollection.exists) {
+    console.info('🟢 [Success] : Migration already exists');
+    return;
+  }
+
+  await createDump({
+    collections: [name, ...associatedDumps],
+    databaseName: db,
+    reference,
+  });
+
+  // Add your migration code here
+};
+
+/**
+ * Rollback the migration
+ * @async
+ * @param {object} options - The options object
+ * @param {string} options.reference - The reference to rollback
+ * @returns {Promise<any>} - The function can return any type of value.
+ */
+const rollback = async (options) => {
+  await restoreDumb({
+    collections: [name, ...associatedDumps],
+    reference: options.reference || reference,
+  });
+};
+
+module.exports = {
+  migrate,
+  name,
+  rollback,
+};

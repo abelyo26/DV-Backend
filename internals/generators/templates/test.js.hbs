@@ -1,0 +1,45 @@
+import chai from 'chai';
+// import httpStatus from 'http-status';
+import mongoose from 'mongoose';
+
+import connectToDb from '../../../src/config/mongoose';
+// import app from '../../../src/index';
+import {{ properCase modelName }}s from '../../../src/models/{{modelName}}s';
+
+chai.use(require('chai-http'));
+
+// const { request, expect } = chai;
+
+describe('{{ modelName }} Routes Test', function () {
+  before(function (done) {
+    connectToDb().then(() => {
+      done();
+    });
+  });
+
+  describe('# [POST] /api/{{ modelName }}/create', function () {
+    // un comment the code below add modify for your test conditions
+    // it('Should create a {{ modelName }}', async function () {
+    //   const response = await request(app)
+    //     .post('/api/{{ modelName }}/create')
+    //     .send('send valid data here');
+    //
+    //   expect(response).to.have.status(httpStatus.OK);
+    //   expect(response.body).to.be.an('object');
+    //   expect(response.body).to.have.property('tested model field');
+    // });
+  });
+
+  after(function (done) {
+    // Clean up test data for next run
+    {{ properCase modelName }}s.deleteMany({})
+      .exec()
+      .then(() => {
+        mongoose.connection.close();
+        done();
+      })
+      .catch((err) => {
+        throw err;
+      });
+  });
+});

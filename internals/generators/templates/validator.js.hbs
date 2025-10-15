@@ -1,0 +1,21 @@
+import { body } from 'express-validator';
+
+/**
+ * create {{ properCase modelName }} Validator for your create route
+ * @returns {Array} Array of validation rules to be used in the route
+ */
+const create{{ properCase modelName }}Validator = () => [
+  // Add your validation rules here
+  body('example').isString().withMessage('example is required'),
+];
+
+/**
+ * get {{ properCase modelName}} Validator for your get route
+ * @returns {Array} Array of validation rules to be used in the route
+ */
+const get{{ properCase modelName }}Validator = () => [
+  // Add your validation rules here
+  body('example').isString().withMessage('example is required'),
+];
+
+export { create{{ properCase modelName }}Validator, get{{ properCase modelName }}Validator };

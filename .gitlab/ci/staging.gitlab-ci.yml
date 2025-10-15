@@ -1,0 +1,54 @@
+step-setup-main:
+  stage: setup
+  only:
+    - main
+  tags:
+    - aff-collect-service-monitoring-backend
+  script:
+    - echo setting up $DYNAMIC_ENV_VAR
+    - touch .env
+    - echo "" > .env
+    - echo APP_DOMAIN=$APP_DOMAIN >> .env
+    - echo APP_EMAIL_ADDRESS=$APP_EMAIL_ADDRESS >> .env
+    - echo APP_NAME=$APP_NAME >> .env
+    - echo JWT_KEY=$JWT_KEY >> .env
+    - echo MONGO_URL=$MONGO_URL >> .env
+    - echo NODE_ENV=$NODE_ENV >> .env
+    - echo KAFKA_BROKER_URL=$KAFKA_BROKER_URL >> .env
+    - echo PORT=$PORT >> .env
+    - echo DB_NAME=$DB_NAME >> .env
+    - echo KAFKA_USERNAME=$KAFKA_USERNAME >> .env
+    - echo KAFKA_PASSWORD=$KAFKA_PASSWORD >> .env
+    - echo KAFKA_USER_ADMIN=$KAFKA_USER_ADMIN >> .env
+    - echo setting up kafka_server_jaas.conf and zookeeper_jaas.conf files
+    - echo EMAIL_OAUTH2_CLIENT_ID=$EMAIL_OAUTH2_CLIENT_ID_PRODUCTION >> .env
+    - echo EMAIL_OAUTH2_CLIENT_SECRET=$EMAIL_OAUTH2_CLIENT_SECRET_PRODUCTION >> .env
+    - echo EMAIL_OAUTH2_REFRESH_TOKEN=$EMAIL_OAUTH2_REFRESH_TOKEN_PRODUCTION >> .env
+    - echo EMAIL_OAUTH2_REDIRECT_URI=$EMAIL_OAUTH2_REDIRECT_URI_PRODUCTION >> .env
+    - echo ALERT_TO_MAILS=$ALERT_TO_MAILS >> .env
+    - export $(grep -v '^#' .env | xargs)
+    - envsubst < kafka_server_jaas.template > kafka_server_jaas.conf
+    - envsubst < zookeeper_jaas.template > zookeeper_jaas.conf
+
+step-build-main:
+  stage: build
+  only:
+    - main
+  tags:
+    - aff-collect-service-monitoring-backend
+  script:
+    - echo building $DYNAMIC_ENV_VAR
+    - sudo docker compose  -f docker-compose.yml -f docker-compose.kafka.yml build
+
+step-deploy-main:
+  stage: deploy
+  only:
+    - main
+  tags:
+    - aff-collect-service-monitoring-backend
+  script:
+    - echo deploying $DYNAMIC_ENV_VAR
+    - sudo docker compose  -f docker-compose.yml up -d
+    - sudo docker compose  -f docker-compose.kafka.yml up --no-recreate -d
+    - sudo rm .env
+    - sudo docker system prune -f

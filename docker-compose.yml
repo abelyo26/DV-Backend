@@ -1,0 +1,15 @@
+services:
+  dv-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dv-backend:latest
+    container_name: dv-backend
+    # restart: unless-stopped
+    env_file: .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    network_mode: 'host'
+    ports:
+      - '5000:5000'

@@ -1,0 +1,20 @@
+/**
+ *
+ * Your {{ properCase modelName }} model
+ *
+ */
+
+import mongoose from 'mongoose';
+
+import * as methodFunctions from './methods';
+import {{ modelName }}Schema from './schema';
+import * as staticFunctions from './statics';
+
+import { modelNames } from '../../utils/constants';
+
+{{ modelName }}Schema.static(staticFunctions);
+{{ modelName }}Schema.method(methodFunctions);
+
+const {{ properCase modelName }} = mongoose.model(modelNames.{{ modelName }}, {{ modelName }}Schema);
+
+export default {{ properCase modelName }};

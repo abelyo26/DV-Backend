@@ -1,0 +1,17 @@
+image: docker:latest
+
+variables:
+  GIT_CLEAN_FLAGS: none # disable git clean
+  GIT_SUBMODULE_STRATEGY: recursive
+
+services:
+  - docker:dind
+
+stages:
+  - setup
+  - build
+  - deploy
+
+# refer https://docs.gitlab.com/ee/ci/yaml/includes.html
+include:
+  - local: .gitlab/ci/*.gitlab-ci.yml

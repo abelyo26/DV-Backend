@@ -1,0 +1,21 @@
+import {{ properCase modelName }} from '../models/{{ modelName }}s';
+
+export const create{{ properCase modelName }}Controller = async (req, res, next) => {
+  // add your controller logic here for Creating {{ modelName }}
+
+  try {
+    res.json({});
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const get{{ properCase modelName }}Controller = async (req, res, next) => {
+  // add your controller logic here for getting {{ modelName }}
+
+  try {
+    res.json({});
+  } catch (error) {
+    next(error);
+  }
+};

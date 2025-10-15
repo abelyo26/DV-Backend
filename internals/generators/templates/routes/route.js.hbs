@@ -1,0 +1,23 @@
+import express from 'express';
+
+import {
+  create{{ properCase modelName }}Controller,
+  get{{ properCase modelName }}Controller,
+} from '../controllers/{{ modelName }}';
+import parseValidationResult from '../validators/errors.parser';
+import {
+  create{{ properCase modelName }}Validator,
+  get{{ properCase modelName}}Validator,
+} from '../validators/{{ modelName }}.validator';
+
+const router = express.Router();
+
+router.get('/', get{{ properCase modelName }}Validator(), parseValidationResult, get{{ properCase modelName }}Controller);
+router.post(
+  '/create',
+  create{{ properCase modelName }}Validator(),
+  parseValidationResult,
+  create{{ properCase modelName }}Controller
+);
+
+export default router;

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URGENT: Services Inactive - Immediate Attention Required</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 40px auto;
+        border-left: 10px solid #e74c3c;
+      }
+      .header {
+        text-align: center;
+        color: #333;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e74c3c;
+      }
+      .header h1 {
+        color: #e74c3c;
+        font-size: 32px;
+        margin: 0;
+      }
+      .content {
+        font-size: 16px;
+        color: #555;
+        padding: 20px 0;
+      }
+      .status {
+        font-weight: bold;
+        color: #e74c3c;
+        font-size: 18px;
+      }
+      .urgent-note {
+        font-size: 18px;
+        color: #e74c3c;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+        margin-top: 20px;
+      }
+      .footer a {
+        color: #777;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Inactive Services</h1>
+        <p>Immediate Attention Required</p>
+      </div>
+
+      <div class="content">
+        {{#each services}}
+        <p><strong>Service Name:</strong> {{serviceName}}</p>
+        <p>
+          <strong>Base URL:</strong>
+          <a href="{{baseUrl}}" target="_blank">{{baseUrl}}</a>
+        </p>
+        <p><strong>Environment:</strong> {{environment}}</p>
+        <p>
+          <strong>Health Status:</strong>
+          <span class="status">{{healthStatus}}</span>
+        </p>
+        <p><strong>Created At:</strong> {{createdAt}}</p>
+        <p><strong>Last Pinged:</strong> {{lastPinged}}</p>
+        <p><strong>Last Successful Ping:</strong> {{lastSuccessfulPing}}</p>
+
+        <hr />
+        {{/each}}
+        <div class="urgent-note">
+          <p>
+            <strong>URGENT:</strong> The service is currently inactive, and
+            immediate action is required to restore functionality. Please
+            investigate and resolve the issue as soon as possible.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          For more detail visit
+          <a
+            href="https://aff-collect.sweetopia.se/monitor#/login"
+            target="_blank"
+            >Affcollect service monitoring</a
+          >
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
