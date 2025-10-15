@@ -12,7 +12,7 @@ const applicantSchema = new mongoose.Schema(
     countryOfBirth: { type: String, required: true },
     countryOfEligibility: { type: String, required: true },
     email: { type: String, required: true, unique: false },
-    phone: { type: String, unique: true },
+    phone: { type: String },
     address: {
       street: String,
       city: String,

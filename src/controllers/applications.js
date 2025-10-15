@@ -50,7 +50,6 @@ export const createApplication = asyncHandler(async (req, res) => {
     newApplication.payment.status = paymentVerified ? 'verified' : 'pending';
   } catch (error) {
     winstonLogger.error('Error verifying payment:', error);
-    throw error;
   }
 
   const savedApplication = await newApplication.save();

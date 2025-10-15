@@ -98,7 +98,7 @@ export const getMulterFileUpload = () => {
 
   const upload = multer({
     storage: storage,
-    limits: { fileSize: 10000000 }, // 10MB
+    limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
     fileFilter,
   });
 
@@ -112,7 +112,7 @@ export const getMulterFileUpload = () => {
           // A Multer error occurred when uploading
           if (err.code === 'LIMIT_FILE_SIZE') {
             return res.status(413).json({
-              message: 'File is too large. Maximum file size is 10MB.',
+              message: 'File is too large. Maximum file size is 2MB.',
             });
           }
           return res.status(400).json({ message: err.message });
