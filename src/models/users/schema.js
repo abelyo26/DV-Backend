@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 
-import { nodeEnv } from '../../config/environments';
-import events from '../../config/Events';
-
 const userSchema = new mongoose.Schema(
   {
     firstName: { required: true, type: String },
@@ -26,9 +23,8 @@ userSchema.post('save', async function cb(doc, next) {
   if (this.wasNew) {
     const { email, _id, password } = this;
 
-    if (nodeEnv !== 'test' && password) {
-      events.emit('verifyEmail', { _id, email, password });
-    }
+    // if (nodeEnv !== 'test' && password) {
+    // }
   }
 
   next();

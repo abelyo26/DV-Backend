@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import Applications from '../models/applications';
 import Coupon from '../models/coupons';
 import APIError from '../errors/APIError';
+import { sendNewApplicationNotification } from '../config/nodemailer';
 import { asyncHandler, verifyPayment } from '../utils';
 import winstonLogger from '../config/winston';
 
@@ -59,6 +60,16 @@ export const createApplication = asyncHandler(async (req, res) => {
     { _id: savedApplication.coupon },
     { $inc: { usedCount: 1 } },
   );
+
+  // Send notification email for new application
+  try {
+    await sendNewApplicationNotification(savedApplication);
+  } catch (notificationError) {
+    winstonLogger.error(
+      `Failed to send new application notification: ${notificationError}`,
+    );
+    // Don't throw error here, just log it - we want the API to succeed regardless
+  }
 
   res.status(httpStatus.CREATED).json({
     success: true,

@@ -8,6 +8,7 @@ dotenv.config();
 const envSchema = Joi.object({
   APP_DOMAIN: Joi.string().required(),
   APP_EMAIL_ADDRESS: Joi.string().email().required(),
+  APP_EMAIL_PASSWORD: Joi.string().required(),
   APP_NAME: Joi.string().required(),
   DB_NAME: Joi.string().required(),
   JWT_KEY: Joi.string().required(),
@@ -35,6 +36,7 @@ export const port = value.PORT;
 export const mongoUrl = value.MONGO_URL;
 export const jwtKey = value.JWT_KEY;
 export const appEmailAddress = value.APP_EMAIL_ADDRESS;
+export const appEmailPassword = value.APP_EMAIL_PASSWORD;
 export const appDomain = value.APP_DOMAIN;
 export const kafkaBrokerUrl = value.KAFKA_BROKER_URL;
 export const appName = value.APP_NAME;

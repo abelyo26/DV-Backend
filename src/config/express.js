@@ -9,6 +9,7 @@ import httpStatus from 'http-status';
 import morgan from 'morgan';
 
 import * as environments from './environments';
+import { sendApiFailureNotification } from './nodemailer';
 import winstonLogger from './winston';
 
 import APIError from '../errors/APIError';
@@ -105,9 +106,22 @@ app.use((err, req, res, next) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
+app.use(async (err, req, res, next) => {
   if (err.status === httpStatus.INTERNAL_SERVER_ERROR) {
     console.error(err);
+  }
+
+  // Import here to avoid circular dependency
+
+  // Send email notification for server errors or any error with status >= 400
+  if (err.status >= 400) {
+    try {
+      await sendApiFailureNotification(req, err);
+    } catch (notificationError) {
+      winstonLogger.error(
+        `Failed to send API error notification: ${notificationError}`,
+      );
+    }
   }
 
   res.status(err.status).send({

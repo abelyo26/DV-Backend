@@ -297,8 +297,6 @@ const verifyPayment = async ({ transactionId, amount, method }) => {
       totalDebited,
     } = parsed;
 
-    const last3 = receiverAccount?.slice(-3);
-
     const checks = {
       receiverName: receiver === receiverName,
       reference: reference === transactionId,
