@@ -8,7 +8,7 @@ export const modelNames = {
 export const paymentMethodsMap = {
   Telebirr: 'Telebirr',
   CBE: 'CBE',
-  Abyssinia: 'Abyssinia (BOA)',
+  Abyssinia: 'Abyssinia Bank',
 };
 
 export const paymentMethods = Object.values(paymentMethodsMap);

@@ -8,7 +8,7 @@ import winstonLogger from '../config/winston';
 export const createApplication = asyncHandler(async (req, res) => {
   const { applicant, dependents, payment, status, couponCode } = req.body;
   let validCoupon = false;
-  let amount = 100000;
+  let amount = 500;
 
   const existingApplication = await Applications.findOne({
     'payment.transactionRef': payment.transactionRef,

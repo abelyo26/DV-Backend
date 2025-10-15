@@ -9,7 +9,12 @@ services:
     env_file: .env
     volumes:
       - .:/app
+      - uploads:/uploads
       - /app/node_modules
     # network_mode: 'host'
     ports:
       - '5000:5000'
+
+volumes:
+  uploads:
+    driver: local
