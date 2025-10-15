@@ -20,7 +20,7 @@ const app = express();
 // if(environments.nodeEnv==='development'){
 //   app.use(morgan('dev'));
 // }
-
+app.set('trust proxy', 1);
 app.use(morgan('dev'));
 
 winstonLogger.stream = {
