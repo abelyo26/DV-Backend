@@ -2,6 +2,7 @@ import { BAD_REQUEST, OK, CONFLICT, CREATED, NOT_FOUND } from 'http-status';
 import Coupon from '../models/coupons';
 import APIError from '../errors/APIError';
 import { asyncHandler } from '../utils';
+import { endOfDay } from 'date-fns';
 
 /**
  * Validate a coupon code
@@ -63,8 +64,8 @@ export const createCoupon = asyncHandler(async (req, res) => {
     discountType,
     discountAmount,
     maxUses,
-    startDate,
-    endDate,
+    startDate: startOfDay(startDate),
+    endDate: endOfDay(endDate),
     isActive,
   });
 

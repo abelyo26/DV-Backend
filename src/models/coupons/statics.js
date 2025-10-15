@@ -1,3 +1,5 @@
+import { isAfter, isBefore } from 'date-fns';
+
 /**
  * Get coupon by code
  * @param {string} code - The coupon code
@@ -23,17 +25,21 @@ export async function validateCoupon(code) {
   });
 
   if (!coupon) {
-    return { isValid: false, message: 'Invalid coupon code' };
+    return { isValid: false, message: 'Invalid Promo code code' };
   }
 
   // Check if coupon has expired
-  if (coupon.endDate && new Date() > coupon.endDate) {
-    return { isValid: false, message: 'Coupon has expired' };
+  if (coupon.endDate && isAfter(new Date(), coupon.endDate)) {
+    return { isValid: false, message: 'Promo code has expired' };
+  }
+  // Check if coupon hasn't started yet
+  if (coupon.startDate && isBefore(new Date(), coupon.startDate)) {
+    return { isValid: false, message: 'Promo code has not started yet' };
   }
 
   // Check if coupon has reached max uses
   if (coupon.maxUses !== null && coupon.usedCount >= coupon.maxUses) {
-    return { isValid: false, message: 'Coupon usage limit reached' };
+    return { isValid: false, message: 'Promo code usage limit reached' };
   }
 
   return {
