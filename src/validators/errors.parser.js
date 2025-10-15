@@ -1,6 +1,8 @@
 import { validationResult } from 'express-validator';
 import httpStatus from 'http-status';
 
+import APIError from '../errors/APIError';
+
 /**
  * Parse errors from express-validator
  * @param {object} req Request object
@@ -15,7 +17,9 @@ const parser = (req, res, next) => {
     return next();
   }
 
-  return res.status(httpStatus.BAD_REQUEST).json(validationErrors);
+  next(
+    new APIError(validationErrors.array()[0].msg, httpStatus.BAD_REQUEST, true),
+  );
 };
 
 export default parser;
