@@ -10,6 +10,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    network_mode: 'host'
+    # network_mode: 'host'
     ports:
       - '5000:5000'
