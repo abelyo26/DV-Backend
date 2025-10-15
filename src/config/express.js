@@ -36,7 +36,8 @@ winstonLogger.stream = {
 if (environments.nodeEnv !== 'test') {
   app.use(morgan('combined', { stream: winstonLogger.stream }));
 }
-const allowedOriginRegex = /localhost|127.0.0.1|0.0.0.0|linkaddis.com/i;
+const allowedOriginRegex =
+  /localhost|127.0.0.1|0.0.0.0|linkaddis.com|91.99.168.216/i;
 const corsOptions = {
   /**
    *
